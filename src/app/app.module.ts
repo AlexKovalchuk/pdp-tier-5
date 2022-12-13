@@ -1,3 +1,8 @@
+import {
+  HTTP_INTERCEPTORS,
+  HttpClientModule,
+  HttpClientXsrfModule
+} from '@angular/common/http';
 import { NgModule }               from '@angular/core';
 import { BrowserModule }          from '@angular/platform-browser';
 import { StoreModule }            from '@ngrx/store';
@@ -8,11 +13,18 @@ import { ChatRoutingModule }      from './modules/chat/chat-routing.module';
 import { PageNotFoundComponent }  from './components/page-not-found/page-not-found.component';
 import { reducers, metaReducers } from './store/mainReducer';
 import { OauthModule }            from './modules/oauth/oauth.module';
+import { DashboardComponent }     from './modules/oauth/dashboard/dashboard.component';
+import { RedirectComponent }      from './components/redirect/redirect.component';
+import {
+  ErrorHandlingInterceptorService
+}                                 from './services/errorHandlingInterceptor/error-handling-interceptor.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    DashboardComponent,
+    RedirectComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,9 +34,17 @@ import { OauthModule }            from './modules/oauth/oauth.module';
     AppRoutingModule,
     StoreModule.forRoot(reducers, {
       metaReducers
-    })
+    }),
+    HttpClientModule,
+    HttpClientXsrfModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:ErrorHandlingInterceptorService,
+      multi:true
+    }
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {
