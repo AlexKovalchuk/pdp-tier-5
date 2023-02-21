@@ -18,6 +18,7 @@ import { RedirectComponent }      from './components/redirect/redirect.component
 import {
   ErrorHandlingInterceptorService
 }                                 from './services/errorHandlingInterceptor/error-handling-interceptor.service';
+import { SignInUpModule }         from './modules/sign-in-up/sign-in-up.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {
     BrowserModule,
     ChatPageModule,
     ChatRoutingModule,
+    SignInUpModule,
     OauthModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers, {
