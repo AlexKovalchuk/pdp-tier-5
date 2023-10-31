@@ -1,0 +1,1 @@
+export const apiLocalDevelopUrl = 'http://localhost:8080';

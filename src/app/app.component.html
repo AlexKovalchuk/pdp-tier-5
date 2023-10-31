@@ -1,1 +1,47 @@
-<router-outlet></router-outlet>
+<header class="header">
+    <mat-toolbar color="primary">
+
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <button routerLink="" mat-icon-button class="example-icon login-icon" aria-label="Example icon-button with heart icon">
+          <span>Ultra Chat</span>
+        </button>
+        <span class="example-spacer"></span>
+
+        <div *ngIf="!isSignedIn" class="not-signed-in">
+          <button 
+            routerLink="signin" 
+            mat-icon-button 
+            class="example-icon login-icon" 
+            aria-label="Example icon-button with heart icon"
+          >
+            <mat-icon>login</mat-icon>
+          </button>
+          <button
+           routerLink="signup"
+           mat-icon-button 
+           class="person_add" 
+           aria-label="Example icon-button with share icon"
+           >
+            <mat-icon>person_add</mat-icon>
+          </button>
+        </div>
+        <div *ngIf="isSignedIn" class="signed-out">
+          <button 
+            routerLink="main" 
+            mat-icon-button 
+            class="example-icon logout-icon" 
+            aria-label="Example icon-button with heart icon"
+          >
+            <mat-icon>logout</mat-icon>
+          </button>
+        </div>
+
+    </mat-toolbar>   
+</header>
+<div class="main-content-wrapper">
+  <router-outlet></router-outlet>
+</div>
+
+

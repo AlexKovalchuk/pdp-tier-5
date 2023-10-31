@@ -1,0 +1,13 @@
+<div class="signin-container">
+  <h3>sign in your account!</h3>
+  <form [formGroup]="signinForm">
+      <label for="email">Email: </label>
+      <input id="email" type="text" formControlName="email">
+      Value: {{signinForm.get('email')?.value}}
+    <br>
+      <label for="password">Last Name: </label>
+      <input id="password" type="text" formControlName="password">
+      Value: {{signinForm.get('password')?.value}}
+  </form>
+  <button mat-raised-button class="sign-in" color="primary" (click)="signInUser()">Sign In</button>
+</div>
