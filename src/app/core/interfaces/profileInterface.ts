@@ -8,3 +8,12 @@ export interface SignInResponse {
   data: any;
   expiresIn: number;
 }
+
+export interface ProfileState {
+  name?: string;
+  surName?:string;
+  age?: string;
+  image?: string;
+  idToken?: string;
+  expiresAt?: string;
+}

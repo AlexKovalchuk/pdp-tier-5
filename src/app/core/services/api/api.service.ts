@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import * as moment from "moment";
 import {tap} from 'rxjs';
 import { apiLocalDevelopUrl } from './../../constants/environment-constants';
-import { CredentialsToSign, SignInResponse } from '../../../core/interfaces/userInterface';
+import { CredentialsToSign, SignInResponse } from '../../interfaces/profileInterface';
 
 @Injectable({
   providedIn: 'root'

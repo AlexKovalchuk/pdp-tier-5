@@ -13,8 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
-// store
-import { counterReducer } from './counter.reducer';
+// Store
+import {storeReducers} from './core/store/reducers/store.reducers';
 
 
 import {MatIconModule} from '@angular/material/icon';
@@ -44,7 +44,7 @@ import { SignupComponent } from './components/signup/signup.component';
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
-    StoreModule.forRoot({ count: counterReducer })
+    StoreModule.forRoot(storeReducers)
   ],
   providers: [],
   bootstrap: [AppComponent]

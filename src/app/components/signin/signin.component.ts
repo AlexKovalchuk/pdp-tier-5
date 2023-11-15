@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { ApiService } from './../../core/services/api/api.service';
-import { CredentialsToSign } from '../../core/interfaces/userInterface';
+import { CredentialsToSign } from '../../core/interfaces/profileInterface';
+import { signinAction } from '../../core/store/actions/profile.actions';
 
 @Component({
   selector: 'app-signin',
@@ -10,7 +13,7 @@ import { CredentialsToSign } from '../../core/interfaces/userInterface';
   styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent implements OnInit {
-  
+  public signin$: Observable<any>; // TODO create interface for the 
   signinForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
@@ -20,7 +23,11 @@ export class SigninComponent implements OnInit {
     private apiService: ApiService,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
+    private store: Store<{ signin: any }>
+  ) { 
+    this.signin$ = store.select('signin');
+  }
+
 
   ngOnInit(): void {
   }
@@ -28,6 +35,7 @@ export class SigninComponent implements OnInit {
   signInUser() {
     const realCredentials = null;
     const credentials: CredentialsToSign = { email: "oleksandr@gmail.com", password: "MyPassw0rd!" };
+    this.store.dispatch(signinAction(credentials));
     
     this.apiService.signIn(credentials).subscribe(
       response => {
