@@ -1,22 +1,35 @@
-import { inject } from '@angular/core';
-import { catchError, exhaustMap, map, of, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { exhaustMap, map, pipe } from 'rxjs';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { ApiService } from '../../../core/services/api/api.service';
-import { signinAction } from '../../../core/store/actions/profile.actions';
+import { signinAction, signinStartAction, signinSuccessAction } from '../../../core/store/actions/profile.actions';
+import { CredentialsToSign, SignInResponse } from '../../interfaces/profileInterface';
 
-
-export const signInEffect = createEffect(
-  (actions$ = inject(Actions), apiService = inject(ApiService)) => {
-    return actions$.pipe(
-      ofType(signinAction),
-      exhaustMap((response) => {
-          console.log('response', response);
-      },
-      catchError((error) => {
-        console.log('Effect error', error);
-      }) )
+@Injectable()
+export class ApiEffect {
+  constructor(
+    private actions$: Actions,
+    private apiService: ApiService
+  ){}
+  
+  signIn$ = createEffect(() => {
+    console.log('signEffect start');
+    
+    return this.actions$.pipe(
+      ofType(signinStartAction),
+      exhaustMap((credentials: CredentialsToSign) => {
+        console.log('exhaustMap', credentials);
+        
+        return this.apiService.signInNew(credentials).pipe(
+          map((responseSignInData: SignInResponse) => {
+            console.log('data after SignIn request response pipe in effect:', responseSignInData);
+            this.apiService.setSession(responseSignInData); // TODO can send less data to this function
+            return signinSuccessAction(responseSignInData);
+          })
+        )
+      })
     )
-  },
-  {functional : true}
-)
+  })
+
+}

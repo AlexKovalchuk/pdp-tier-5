@@ -9,7 +9,7 @@
         </button>
         <span class="example-spacer"></span>
 
-        <div *ngIf="!isSignedIn" class="not-signed-in">
+        <div class="not-signed-in">
           <button 
             routerLink="signin" 
             mat-icon-button 
@@ -27,7 +27,7 @@
             <mat-icon>person_add</mat-icon>
           </button>
         </div>
-        <div *ngIf="isSignedIn" class="signed-out">
+        <div class="signed-out">
           <button 
             routerLink="main" 
             mat-icon-button 

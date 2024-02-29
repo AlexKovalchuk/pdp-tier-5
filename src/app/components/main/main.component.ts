@@ -13,8 +13,8 @@ export class MainComponent implements OnInit {
   public count$: Observable<number>;
 
  
-  constructor(private store: Store<{ count: number }>) {
-    this.count$ = store.select('count');
+  constructor(private store: Store<{ counterReducer: number }>) {
+    this.count$ = store.select('counterReducer');
   }
  
   ngOnInit(): void {
