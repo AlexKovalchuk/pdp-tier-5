@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { StoreModule } from '@ngrx/store';
+
 
 import { AppRoutingModule }  from './app-routing.module';
 import { AppComponent }      from './app.component';
@@ -11,13 +13,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
+// Store
+import {storeReducers} from './core/store/reducers/store.reducers';
+
 
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { SigninComponent } from './components/signin/signin.component';
+import { SigninComponent } from './components/auth/signin/signin.component';
 import { MainComponent } from './components/main/main.component';
-import { SignupComponent } from './components/signup/signup.component';
+import { SignupComponent } from './components/auth/signup/signup.component';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { ApiEffect } from './core/store/effects/profile.effects';
 
 @NgModule({
   declarations: [
@@ -33,10 +42,17 @@ import { SignupComponent } from './components/signup/signup.component';
     ChatRoutingModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule, MatIconModule, MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    StoreModule.forRoot(storeReducers),
+    EffectsModule.forRoot([ApiEffect]),
+    StoreDevtoolsModule.instrument({
+      logOnly: environment.production, // Restrict extension to log-only mode
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import * as moment from "moment";
 import {tap} from 'rxjs';
 import { apiLocalDevelopUrl } from './../../constants/environment-constants';
-import { CredentialsToSign, SignInResponse } from '../../../core/interfaces/userInterface';
+import { CredentialsToSign, SignInResponse } from '../../interfaces/profileInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,20 @@ export class ApiService {
     return this.http.post<SignInResponse>(`${apiLocalDevelopUrl}/signin`, credentials).pipe(tap(res => this.setSession(res)));
   }
 
-  private setSession(authResult: SignInResponse) {
+  signInNew(credentials: CredentialsToSign): Observable<SignInResponse> {
+    return this.http.post<SignInResponse>(
+      `${apiLocalDevelopUrl}/signin`, credentials
+    );
+  }
+
+  formatUser(data: CredentialsToSign) {
+    // const expirationDate = new Date(new Date().getTime() + +data.expiresIn * 1000)
+    // const user = new User(data.email, data.idToken, data.localId, expirationDate);
+    // return user;
+  }
+
+
+  public setSession(authResult: SignInResponse) {
     const expiresAt = moment().add(authResult.expiresIn,'minute');
     localStorage.setItem('id_token', authResult.token);
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
